@@ -1,0 +1,3 @@
+DEBUG = True
+SQLALCHEMY_DATABASE_URI = 'sqlite:///catalog.db'
+SECRET_KEY = "k2978sj1928dhy124(*ASud8907ADSA7(*@#&1"
