@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<h2>Recently addded</h2>
+
+<div class="row">
+    {% for product in products: %}
+    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+        <div class="item-wrapper">
+
+            {{ url_for('site.uploads', filename=product.picture) }}
+            <img
+                    src="{{ url_for('static', filename='uploads/'+product.picture) }}"
+                 alt="">
+
+            {{ product.title }}
+            <br>
+            Category: {{ product.category.name }}
+
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
