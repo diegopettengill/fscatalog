@@ -2,27 +2,84 @@
 
 {% block content %}
 
-<h2>Recently addded</h2>
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+        <li data-target="#carousel-example-generic" data-slide-to="0"
+            class="active"></li>
+        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    </ol>
 
-<div class="row">
-    {% for product in products: %}
-    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-
-        <div class="item-wrapper">
-
-            {{ url_for('site.uploads', filename=product.picture) }}
-            <img
-                    src="{{ url_for('static', filename='uploads/'+product.picture) }}"
-                 alt="">
-
-            {{ product.title }}
-            <br>
-            Category: {{ product.category.name }}
-
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="http://placehold.it/1680x350" alt="...">
+            <div class="carousel-caption">
+                ...
+            </div>
+        </div>
+        <div class="item">
+            <img src="http://placehold.it/1680x350" alt="...">
+            <div class="carousel-caption">
+                ...
+            </div>
         </div>
 
     </div>
-    {% endfor %}
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel-example-generic"
+       role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"
+              aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-example-generic"
+       role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"
+              aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="container">
+
+
+    <div class="page-header">
+        <h1>recently addded
+            <small>see more</small>
+        </h1>
+    </div>
+
+
+    <div class="row">
+        {% for product in products: %}
+        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
+            <div class="item-wrapper">
+                <img src="{{ url_for('static', filename='uploads/'+product.picture) }}"
+                     alt="" class="img-responsive">
+
+                <p>
+                {{ product.title }}
+                </p>
+                <div class="item-author pull-left">
+                    <img src="http://placehold.it/30x30" class="img-circle" alt="">
+                    {{ product.user.username }}
+                </div>
+
+                <div class="item-price pull-right">
+                    ${{ product.price/100 }}
+                </div>
+
+                <div class="clearfix"></div>
+
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+
 </div>
 
 {% endblock %}

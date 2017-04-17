@@ -14,6 +14,7 @@ session.query(Product).delete()
 session.query(User).delete()
 session.query(Category).delete()
 
+
 # Define the categories
 seed_categories = [
     Category(name="Atari"),
@@ -58,7 +59,8 @@ seed_products = [
                     " incredibly well polished and well cared",
         category=seed_categories[3],
         user=seed_users[0],
-        picture="products/dummy_product_1.jpg"
+        picture="dummy_product_1.jpg",
+        price=2399
     ),
     Product(
         title="Playstation One - Old school :D",
@@ -66,7 +68,8 @@ seed_products = [
                     " nice to play some old school games",
         category=seed_categories[6],
         user=seed_users[0],
-        picture="products/dummy_product_2.jpg"
+        picture="dummy_product_2.jpg",
+        price=12999
     ),
     Product(
         title="Xbox 360 with Kinect",
@@ -74,14 +77,16 @@ seed_products = [
                     " the day has come :(",
         category=seed_categories[9],
         user=seed_users[1],
-        picture="products/dummy_product_3.jpg"
+        picture="dummy_product_3.jpg",
+        price=5699
     ),
     Product(
         title="Nintendo GameBoy",
         description="GameBoy with Tetris cartdrige",
         category=seed_categories[7],
         user=seed_users[1],
-        picture="products/dummy_product_4.jpg"
+        picture="dummy_product_4.jpg",
+        price=2999
     )
 ]
 

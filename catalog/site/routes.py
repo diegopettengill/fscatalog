@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, send_from_directory
-from catalog.models import Product
+from catalog.models import Product, Category
 
 site = Blueprint('site', __name__, template_folder='templates')
 
@@ -11,5 +11,11 @@ def uploads(filename):
 
 @site.route('/')
 def home():
-    products = Product.query.all()
-    return render_template('home.html', products=products)
+
+    # fetch the last 12 products from the database
+    products = Product.query.limit(12)
+
+    # fetch all the categories
+    categories = Category.query.all()
+
+    return render_template('home.html', products=products, categories=categories)

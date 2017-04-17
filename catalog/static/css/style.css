@@ -1,0 +1,17 @@
+#categories-menu{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#categories-menu li{
+    font-size: 16px;
+    display: inline-block;
+    margin:0 10px;
+    height: 60px;
+    line-height: 60px;
+}
+
+#categories-menu li a{
+    color:#666;
+}

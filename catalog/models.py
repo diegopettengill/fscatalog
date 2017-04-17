@@ -47,6 +47,7 @@ class Product(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship(User)
     picture = Column(String(250))
+    price = Column(Integer)
     created_at = Column(DateTime, default=get_current_time)
     updated_at = Column(DateTime, default=get_current_time,
                         onupdate=get_current_time)

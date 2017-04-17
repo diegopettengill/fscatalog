@@ -1,0 +1,23 @@
+{
+  "name": "Udacity Full Stack Catalog Project",
+  "homepage": "https://github.com/diegopettengill/fscatalog",
+  "authors": [
+    "Diego Pettengill Fernandes"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "/catalog/static/js/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7"
+  }
+}
