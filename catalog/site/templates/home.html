@@ -61,10 +61,14 @@
                      alt="" class="img-responsive">
 
                 <p>
-                {{ product.title }}
+                    <a
+                            href="{{ url_for('site.product_view', product_id=product.id, product_slug=product.slug) }}">
+                        {{ product.title }}
+                    </a>
                 </p>
                 <div class="item-author pull-left">
-                    <img src="http://placehold.it/30x30" class="img-circle" alt="">
+                    <img src="http://placehold.it/30x30" class="img-circle"
+                         alt="">
                     {{ product.user.username }}
                 </div>
 

@@ -31,6 +31,7 @@ class Category(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
+    slug = Column(String(100), nullable=False)
 
 
 """Product model"""
@@ -40,7 +41,8 @@ class Product(Base):
     __tablename__ = "products"
 
     id = Column(Integer, primary_key=True)
-    title = Column(String(50), unique=True, nullable=False)
+    title = Column(String(150), unique=True, nullable=False)
+    slug = Column(String(150), unique=False, nullable=False)
     description = Column(Text)
     category_id = Column(Integer, ForeignKey("categories.id"))
     category = relationship(Category)

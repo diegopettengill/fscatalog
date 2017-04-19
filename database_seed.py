@@ -17,16 +17,16 @@ session.query(Category).delete()
 
 # Define the categories
 seed_categories = [
-    Category(name="Atari"),
-    Category(name="Super Nintendo"),
-    Category(name="Mega Drive"),
-    Category(name="Nintendo 64"),
-    Category(name="Sega Saturn"),
-    Category(name="Dreamcast"),
-    Category(name="Playstation"),
-    Category(name="GameBoy"),
-    Category(name="Playstation 2"),
-    Category(name="Xbox 360")
+    Category(name="Atari", slug="atari"),
+    Category(name="Super Nintendo", slug="super-nintendo"),
+    Category(name="Mega Drive", slug="mega-drive"),
+    Category(name="Nintendo 64", slug="nintendo-64"),
+    Category(name="Sega Saturn", slug="sega-saturn"),
+    Category(name="Dreamcast", slug="dreamcast"),
+    Category(name="Playstation", slug="playstation"),
+    Category(name="GameBoy", slug="gameboy"),
+    Category(name="Playstation 2", slug="playstation-2"),
+    Category(name="Xbox 360", slug="xbox-360")
 ]
 
 # Define some dummy users
@@ -55,6 +55,7 @@ seed_users = [
 seed_products = [
     Product(
         title="Nintendo 64 with games",
+        slug="nintendo-64-with-games",
         description="Selling my Nintendo 64 with 4 games, the video game is"
                     " incredibly well polished and well cared",
         category=seed_categories[3],
@@ -64,6 +65,7 @@ seed_products = [
     ),
     Product(
         title="Playstation One - Old school :D",
+        slug="playstation-one-old-school",
         description="PsOne very well cared"
                     " nice to play some old school games",
         category=seed_categories[6],
@@ -73,6 +75,7 @@ seed_products = [
     ),
     Product(
         title="Xbox 360 with Kinect",
+        slug="xbox-360-with-kinect",
         description="Selling my baby"
                     " the day has come :(",
         category=seed_categories[9],
@@ -82,6 +85,7 @@ seed_products = [
     ),
     Product(
         title="Nintendo GameBoy",
+        slug="nintendo-gameboy",
         description="GameBoy with Tetris cartdrige",
         category=seed_categories[7],
         user=seed_users[1],
