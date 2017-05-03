@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="container">
+
+    <form action="" method="post" class="form-horizontal" role="form">
+        <div class="form-group">
+            <legend>Login</legend>
+        </div>
+
+        <div id="result">
+
+        </div>
+
+        <a href="{{auth_url}}" class="btn btn-primary btn-block"
+           style="padding: 15px 0;">Login with Google</a>
+
+        <!--<div class="g-signin2" data-onsuccess="onSignIn"></div>-->
+
+    </form>
+
+</div>
+{% endblock %}

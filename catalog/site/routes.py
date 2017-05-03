@@ -1,6 +1,17 @@
-from flask import Blueprint, render_template, send_from_directory
-from catalog.models import Product, Category
+from flask import Blueprint, render_template, send_from_directory, request, \
+    url_for, redirect, session, json
+from catalog.models import Product, Category, User
 from catalog import app
+from flask import make_response
+from flask.ext.login import LoginManager, login_required, login_user, \
+    logout_user, current_user, UserMixin
+from requests_oauthlib import OAuth2Session
+from requests.exceptions import HTTPError
+from database import db_session
+
+login_manager = LoginManager(app)
+login_manager.login_view = "site.login"
+login_manager.session_protection = "strong"
 
 site = Blueprint('site', __name__, template_folder='templates')
 
@@ -45,3 +56,106 @@ def product_view(product_id, product_slug):
         'products/view.html',
         product=product
     )
+
+
+@site.route('/product/add', methods=["GET", "POST"])
+def product_add():
+    # if (request.method == "POST"):
+    #     pass
+    # else:
+    #     pass
+    return "rola"
+    # return render_template(
+    #     'products/home.html'
+    # )
+
+
+@site.route('/login')
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('site.home'))
+    google = get_google_auth()
+    auth_url, state = google.authorization_url(
+        app.config["AUTH_URI"], access_type='offline')
+    session['oauth_state'] = state
+    return render_template('auth/login.html', auth_url=auth_url)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+""" OAuth Session creation """
+
+
+def get_google_auth(state=None, token=None):
+    if token:
+        return OAuth2Session(app.config['CLIENT_ID'], token=token)
+    if state:
+        return OAuth2Session(
+            app.config['CLIENT_ID'],
+            state=state,
+            redirect_uri=app.config['REDIRECT_URI'])
+    oauth = OAuth2Session(
+        app.config['CLIENT_ID'],
+        redirect_uri=app.config['REDIRECT_URI'],
+        scope=app.config['SCOPE'])
+    return oauth
+
+
+@site.route('/auth/google')
+def login_google():
+    if current_user is not None and current_user.is_authenticated:
+        return redirect(url_for('site.home'))
+
+    if 'error' in request.args:
+        if request.args.get('error') == 'access_denied':
+            return 'You denied access.'
+        return 'Error encountered.'
+
+    if 'code' not in request.args and 'state' not in request.args:
+        return redirect(url_for('login'))
+    else:
+        google = get_google_auth(state=session['oauth_state'])
+        try:
+            token = google.fetch_token(
+                app.config['TOKEN_URI'],
+                client_secret=app.config['CLIENT_SECRET'],
+                authorization_response=request.url)
+        except HTTPError:
+            return 'HTTPError occurred.'
+
+        google = get_google_auth(token=token)
+        resp = google.get(app.config['USER_INFO'])
+
+        if resp.status_code == 200:
+
+            user_data = resp.json()
+            email = user_data['email']
+            user = User.query.filter_by(email=email).first()
+
+            if user is None:
+                user = User()
+                user.email = email
+
+            user.name = user_data['name']
+
+            user.tokens = json.dumps(token)
+            user.avatar = user_data['picture']
+            user.provider = "google"
+
+            db_session.add(user)
+            db_session.commit()
+
+            login_user(user)
+            return redirect(url_for('site.home'))
+
+        return 'Could not fetch your information.'
+
+
+@site.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('site.home'))

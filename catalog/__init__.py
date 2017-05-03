@@ -1,10 +1,9 @@
 from flask import Flask, send_from_directory
 from site import middlewares
 
-
 app = Flask(__name__)
 
-app.config['UPLOAD_FOLDER'] = 'catalog/uploads/'
+app.config.from_pyfile('config.py', silent=True)
 
 # middlewares
 app.wsgi_app = middlewares.AppMiddleware(app.wsgi_app)
