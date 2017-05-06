@@ -63,6 +63,12 @@
 
                 <ul id="main-menu">
                     <li>
+                        <a href="{{ url_for( 'site.product_add')}}"
+                           class="btn btn-success">
+                            Sell Something!
+                        </a>
+                    </li>
+                    <li>
                         {% if current_user.is_authenticated %}
 
                         <div class="dropdown">

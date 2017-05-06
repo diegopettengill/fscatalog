@@ -64,10 +64,10 @@ def product_add():
     #     pass
     # else:
     #     pass
-    return "rola"
-    # return render_template(
-    #     'products/home.html'
-    # )
+    # return "rola"
+    return render_template(
+        'products/add.html'
+    )
 
 
 @site.route('/login')
