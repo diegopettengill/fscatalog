@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, send_from_directory, request, \
-    url_for, redirect, session, json
+    url_for, redirect, session, json, flash
 from catalog.models import Product, Category, User
 from catalog import app
 from flask import make_response
@@ -8,6 +8,7 @@ from flask.ext.login import LoginManager, login_required, login_user, \
 from requests_oauthlib import OAuth2Session
 from requests.exceptions import HTTPError
 from database import db_session
+from forms.product import ProductForm
 
 login_manager = LoginManager(app)
 login_manager.login_view = "site.login"
@@ -60,13 +61,28 @@ def product_view(product_id, product_slug):
 
 @site.route('/product/add', methods=["GET", "POST"])
 def product_add():
-    # if (request.method == "POST"):
-    #     pass
-    # else:
-    #     pass
-    # return "rola"
+
+    categories = Category.query.all()
+
+    form = ProductForm()
+    form.category.choices =  [(c.id, c.name) for c in Category.query.order_by('name')]
+
+    if request.method == "POST":
+        if form.validate():
+            flash('You were successfully logged in','success')
+            return "Valid form"
+        else:
+            print form.errors()
+            for e in form.errors():
+                flash(e, 'error')
+            # return "error"
+
+
+
     return render_template(
-        'products/add.html'
+        'products/add.html',
+        categories=categories,
+        form=form
     )
 
 

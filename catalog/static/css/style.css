@@ -61,10 +61,21 @@
 }
 
 .box .page-header {
-    margin: 0px 0 20px;
+    margin: 0 0 20px;
 }
 
 .box .page-header h3{
     margin:0;
 }
 
+
+.form-control.error{
+    border-color: #ef5350;
+}
+
+label.error{
+    color:#ef5350;
+    padding: 10px 0 0 0;
+    font-weight: 400;
+    font-size: 12px;
+}

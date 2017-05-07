@@ -2,6 +2,12 @@
  * Created by Diego Pettengill Fernandes on 23/04/2017.
  */
 
+$(document).ready(function(){
+
+    $(".validate").validate();
+
+});
+
 // Auth functions
 
 // Gplus signIn

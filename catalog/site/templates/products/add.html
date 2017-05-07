@@ -12,6 +12,47 @@
             <h1 class="text-center">NICE!</h1>
             <h4 class="text-center">Let's sell some old stuff :D</h4>
 
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <ul class=flashes>
+                {% for category, message in messages %}
+                <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+            <form method="post" class="validate" novalidate name="product-add">
+
+                {{ form.csrf_token }}
+
+                <div class="form-group">
+                    {{ form.title.label }}
+                    {{ form.title(class='form-control', required='required') }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.category.label }}
+                    {{ form.category(class='form-control', required='required') }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.description.label }}
+                    {{ form.description(class='form-control', rows="5", required='required') }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.price.label }}
+                    {{ form.price(class='form-control', required='required') }}
+                </div>
+
+                <div class="form-group">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Save!</button>
+                    </div>
+                </div>
+
+            </form>
 
         </div>
 
