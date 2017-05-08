@@ -14,17 +14,24 @@
 
             {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-            <ul class=flashes>
-                {% for category, message in messages %}
-                <li class="{{ category }}">{{ message }}</li>
-                {% endfor %}
-            </ul>
+
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}}">
+                <button type="button" class="close" data-dismiss="alert"
+                        aria-hidden="true">&times;</button>
+                {{ message }}
+            </div>
+            {% endfor %}
+
             {% endif %}
             {% endwith %}
 
-            <form method="post" class="validate" novalidate name="product-add">
+            <form method="post" class="validate" enctype="multipart/form-data" novalidate
+                  name="product-add">
 
                 {{ form.csrf_token }}
+
+                {{ form.hidden_tag() }}
 
                 <div class="form-group">
                     {{ form.title.label }}
@@ -32,13 +39,16 @@
                 </div>
 
                 <div class="form-group">
-                    {{ form.category.label }}
-                    {{ form.category(class='form-control', required='required') }}
+                    {{ form.category_id.label }}
+                    {{ form.category_id(class='form-control',
+                    required='required')
+                    }}
                 </div>
 
                 <div class="form-group">
                     {{ form.description.label }}
-                    {{ form.description(class='form-control', rows="5", required='required') }}
+                    {{ form.description(class='form-control', rows="5",
+                    required='required') }}
                 </div>
 
                 <div class="form-group">
@@ -47,8 +57,15 @@
                 </div>
 
                 <div class="form-group">
+                    {{form.picture.label}}
+                    {{form.picture}}
+                </div>
+
+                <div class="form-group">
                     <div class="text-center">
-                        <button type="submit" class="btn btn-success btn-lg btn-block">Save!</button>
+                        <button type="submit"
+                                class="btn btn-success btn-lg btn-block">Save!
+                        </button>
                     </div>
                 </div>
 

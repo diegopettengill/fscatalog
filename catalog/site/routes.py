@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, render_template, send_from_directory, request, \
     url_for, redirect, session, json, flash
 from catalog.models import Product, Category, User
@@ -9,6 +10,8 @@ from requests_oauthlib import OAuth2Session
 from requests.exceptions import HTTPError
 from database import db_session
 from forms.product import ProductForm
+from catalog.helpers import slugify
+from werkzeug.utils import secure_filename
 
 login_manager = LoginManager(app)
 login_manager.login_view = "site.login"
@@ -27,7 +30,7 @@ def inject():
 
 @site.route('/uploads/<filename>')
 def uploads(filename):
-    return send_from_directory('catalog/uploads/', filename)
+    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
 
 
 @site.route('/')
@@ -50,7 +53,8 @@ def category(slug):
 
 @site.route('/product/<int:product_id>/<product_slug>')
 def product_view(product_id, product_slug):
-    # fetch the last 12 products from the database
+
+    # fetch the product from the database
     product = Product.query.filter_by(id=product_id).first()
 
     return render_template(
@@ -61,23 +65,43 @@ def product_view(product_id, product_slug):
 
 @site.route('/product/add', methods=["GET", "POST"])
 def product_add():
-
     categories = Category.query.all()
 
-    form = ProductForm()
-    form.category.choices =  [(c.id, c.name) for c in Category.query.order_by('name')]
+    product = Product()
+
+    form = ProductForm(obj=product)
+    form.category_id.choices = [(c.id, c.name) for c in
+                                Category.query.order_by('name')]
 
     if request.method == "POST":
         if form.validate():
-            flash('You were successfully logged in','success')
-            return "Valid form"
+
+            form.populate_obj(product)
+
+            product.user_id = current_user.get_id()
+            product.slug = slugify(product.title)
+
+            f = form.picture.data
+            filename = secure_filename(f.filename)
+            f.save(os.path.join(
+                app.config["UPLOAD_FOLDER"], 'uploads', filename
+            ))
+
+            product.picture = f.filename
+
+            db_session.add(product)
+            db_session.commit()
+
+            flash('Nice! You just added your product to sell :D', 'success')
+            redirect("/")
+
         else:
-            print form.errors()
-            for e in form.errors():
-                flash(e, 'error')
-            # return "error"
-
-
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(u"Error in the %s field - %s" % (
+                        getattr(form, field).label.text,
+                        error
+                    ))
 
     return render_template(
         'products/add.html',
