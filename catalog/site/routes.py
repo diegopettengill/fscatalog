@@ -1,6 +1,4 @@
 import os
-import PIL
-from PIL import Image
 from flask import Blueprint, render_template, send_from_directory, request, \
     url_for, redirect, session, json, flash
 from catalog.models import Product, Category, User
