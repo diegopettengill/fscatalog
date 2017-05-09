@@ -59,7 +59,7 @@
             <div class="item-wrapper">
                 {% if product.picture: %}
                 <img
-                        src="{{ url_for('site.uploads', filename=product.picture) }}"
+                        src="{{ url_for('static', filename='uploads/'+product.picture) }}"
                      alt="" class="img-responsive">
                 {% endif %}
                 <p>

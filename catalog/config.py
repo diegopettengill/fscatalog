@@ -10,4 +10,4 @@ TOKEN_URI = 'https://accounts.google.com/o/oauth2/token'
 USER_INFO = 'https://www.googleapis.com/userinfo/v2/me'
 SCOPE = ['profile', 'email']
 
-UPLOAD_FOLDER = 'uploads'
+UPLOAD_FOLDER = 'catalog/static/'

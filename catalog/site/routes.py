@@ -1,4 +1,6 @@
 import os
+import PIL
+from PIL import Image
 from flask import Blueprint, render_template, send_from_directory, request, \
     url_for, redirect, session, json, flash
 from catalog.models import Product, Category, User
@@ -53,7 +55,6 @@ def category(slug):
 
 @site.route('/product/<int:product_id>/<product_slug>')
 def product_view(product_id, product_slug):
-
     # fetch the product from the database
     product = Product.query.filter_by(id=product_id).first()
 
@@ -83,9 +84,12 @@ def product_add():
 
             f = form.picture.data
             filename = secure_filename(f.filename)
-            f.save(os.path.join(
+            filepath = os.path.join(
                 app.config["UPLOAD_FOLDER"], 'uploads', filename
-            ))
+            )
+            f.save(filepath)
+
+            # @TODO Generate an image thumbnail
 
             product.picture = f.filename
 
