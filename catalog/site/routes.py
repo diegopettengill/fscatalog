@@ -8,10 +8,11 @@ from flask.ext.login import LoginManager, login_required, login_user, \
     logout_user, current_user, UserMixin
 from requests_oauthlib import OAuth2Session
 from requests.exceptions import HTTPError
-from database import db_session
+from database import db_session, exc
 from forms.product import ProductForm
 from catalog.helpers import slugify
 from werkzeug.utils import secure_filename
+from datetime import datetime
 
 login_manager = LoginManager(app)
 login_manager.login_view = "site.login"
@@ -63,25 +64,34 @@ def product_view(product_id, product_slug):
 
 
 @site.route('/product/add', methods=["GET", "POST"])
+@login_required
 def product_add():
     categories = Category.query.all()
 
     product = Product()
 
     form = ProductForm(obj=product)
+
+    # Set the categories to the form
     form.category_id.choices = [(c.id, c.name) for c in
                                 Category.query.order_by('name')]
 
     if request.method == "POST":
+
         if form.validate():
 
+            # populate Product obj with wtform data
             form.populate_obj(product)
 
             product.user_id = current_user.get_id()
             product.slug = slugify(product.title)
 
             f = form.picture.data
-            filename = secure_filename(f.filename)
+
+            # renames the file to prevent duplicated names
+            filename = datetime.now().strftime(
+                '%Y%m%d%H%M%S') + secure_filename(f.filename)
+
             filepath = os.path.join(
                 app.config["UPLOAD_FOLDER"], 'uploads', filename
             )
@@ -92,10 +102,15 @@ def product_add():
             product.picture = f.filename
 
             db_session.add(product)
-            db_session.commit()
 
-            flash('Nice! You just added your product to sell :D', 'success')
-            redirect("/")
+            try:
+                db_session.commit()
+                flash('Nice! You just added your product to sell :D', 'success')
+                redirect("/")
+            except exc.SQLAlchemyError:
+                db_session.rollback()
+                flash('Error! There was an error trying to save your product',
+                      'danger')
 
         else:
             for field, errors in form.errors.items():

@@ -4,7 +4,11 @@
 
 $(document).ready(function(){
 
+    //Form validation, thanks jQuery Validate :D
     $(".validate").validate();
+
+    //Mask money
+    $('.mask-money').maskMoney();
 
 });
 

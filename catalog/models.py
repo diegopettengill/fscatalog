@@ -45,8 +45,8 @@ class Product(Base):
     __tablename__ = "products"
 
     id = Column(Integer, primary_key=True)
-    title = Column(String(150), unique=True, nullable=False)
-    slug = Column(String(150), unique=False, nullable=False)
+    title = Column(String(150), nullable=False)
+    slug = Column(String(150), nullable=False)
     description = Column(Text)
     category_id = Column(Integer, ForeignKey("categories.id"))
     category = relationship(Category)

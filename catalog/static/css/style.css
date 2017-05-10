@@ -79,3 +79,9 @@ label.error{
     font-weight: 400;
     font-size: 12px;
 }
+
+.alert-message {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
