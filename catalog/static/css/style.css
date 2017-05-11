@@ -85,3 +85,11 @@ label.error{
     background-color: #f2dede;
     border-color: #ebccd1;
 }
+
+.copyright{
+    padding:20px 0;
+}
+
+#main-container{
+    padding:0 0 30px 0;
+}

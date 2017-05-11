@@ -17,5 +17,5 @@ class ProductForm(FlaskForm):
     category_id = SelectField('Category', coerce=int, validators=[
         DataRequired()])
     user_id = HiddenField("user_id")
-    picture = FileField('Picture', validators=[FileRequired(), FileAllowed([
+    picture = FileField('Picture', validators=[FileAllowed([
         'jpg', 'png'], 'Images only!')])

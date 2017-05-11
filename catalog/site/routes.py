@@ -37,7 +37,7 @@ def uploads(filename):
 @site.route('/')
 def home():
     # fetch the last 12 products from the database
-    products = Product.query.limit(12)
+    products = Product.query.limit(16)
 
     return render_template(
         'home.html',
@@ -95,11 +95,12 @@ def product_add():
             filepath = os.path.join(
                 app.config["UPLOAD_FOLDER"], 'uploads', filename
             )
+
             f.save(filepath)
 
             # @TODO Generate an image thumbnail
 
-            product.picture = f.filename
+            product.picture = filename
 
             db_session.add(product)
 
@@ -125,6 +126,87 @@ def product_add():
         categories=categories,
         form=form
     )
+
+
+@site.route('/product/edit/<int:product_id>', methods=["GET", "POST"])
+@login_required
+def product_edit(product_id):
+    categories = Category.query.all()
+
+    product = Product.query.filter_by(id=product_id).first()
+
+    print product
+
+    form = ProductForm(obj=product)
+
+    # Set the categories to the form
+    form.category_id.choices = [(c.id, c.name) for c in
+                                Category.query.order_by('name')]
+
+    if request.method == "POST":
+
+        if form.validate():
+
+            # populate Product obj with wtform data
+            form.populate_obj(product)
+
+            product.user_id = current_user.get_id()
+            product.slug = slugify(product.title)
+
+            # If user has uploaded another picture
+            if hasattr(form.picture.data, 'filename'):
+                f = form.picture.data
+
+                # renames the file to prevent duplicated names
+                filename = datetime.now().strftime(
+                    '%Y%m%d%H%M%S') + secure_filename(f.filename)
+
+                filepath = os.path.join(
+                    app.config["UPLOAD_FOLDER"], 'uploads', filename
+                )
+
+                f.save(filepath)
+
+                # @TODO Generate an image thumbnail
+                product.picture = filename
+
+            db_session.add(product)
+
+            try:
+                db_session.commit()
+                flash('Nice! You just updated your product:D',
+                      'success')
+            except exc.SQLAlchemyError:
+                db_session.rollback()
+                flash('Error! There was an error trying to save your product',
+                      'danger')
+
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    flash(u"Error in the %s field - %s" % (
+                        getattr(form, field).label.text,
+                        error
+                    ))
+
+    return render_template(
+        'products/add.html',
+        categories=categories,
+        form=form
+    )
+
+
+@site.route('/product/delete/<int:product_id>', methods=["GET", "POST"])
+@login_required
+def product_delete(product_id):
+    product = Product.query.filter_by(id=product_id).first()
+
+    if product is not None:
+        db_session.delete(product)
+        db_session.commit()
+        return redirect("/")
+    else:
+        return redirect("/")
 
 
 @site.route('/login')
