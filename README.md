@@ -1,8 +1,6 @@
 # Udacity Item Catalog Project
 ### Project made for Udacity's Full Stack Web Developer Nanodegree
 
-This is a python module that creates a website and JSON API for a list of items grouped into a category. Users can edit or delete items they've creating. Adding items, deleteing items and editing items requiring logging in with Google+.
-
 ## Instructions to Run Project
 
 ### Set up a Google Plus auth application.
