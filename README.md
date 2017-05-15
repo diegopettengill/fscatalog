@@ -1,9 +1,9 @@
-#Udacity Item Catalog Project
-###Project made for Udacity's Full Stack Web Developer Nanodegree
+# Udacity Item Catalog Project
+### Project made for Udacity's Full Stack Web Developer Nanodegree
 
 This is a python module that creates a website and JSON API for a list of items grouped into a category. Users can edit or delete items they've creating. Adding items, deleteing items and editing items requiring logging in with Google+.
 
-## Instrucitons to Run Project
+## Instructions to Run Project
 
 ### Set up a Google Plus auth application.
 1. go to https://console.developers.google.com/project and login with Google.
@@ -21,10 +21,10 @@ This is a python module that creates a website and JSON API for a list of items 
 "781544697558-3gjnobb4utugg6f867i3m3ekpkg3jm50.apps.googleusercontent.com" so that it uses your Client ID from the web applciation.
 
 ### Setup the Database & Start the Server
-1. Start up your VM, go to the application root and type "python
+1. Type "pip install -r dependencies.txt" to install the dependencies.
+2. Start up your VM, go to the application root and type "python
 database_setup.py" this will create the database.
-2. Type "python database_seed.py" to seed the database with some dummy data.
-3. Type "pip install -r dependencies.txt" to install the dependencies.
+3. Type "python database_seed.py" to seed the database with some dummy data.
 4. Type "python run.py"
 
 ### Open in a webpage
