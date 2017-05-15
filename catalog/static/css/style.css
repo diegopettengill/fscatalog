@@ -1,3 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,500);
+
+body{
+    font-family:'Raleway', Arial, sans-serif;
+}
+
 /* COLORS */
 .primary-text {
     color: #7d7a77;
@@ -12,8 +18,33 @@
     padding-bottom: 20px;
 }
 
-/* GENERAL COMPONENTS */
+.no-results-wrapper{
+    padding:40px 0;
+    text-align: center;
+}
 
+a{
+    color:#666;
+    -webkit-transition: color 0.5s;
+    -moz-transition: color 0.5s;
+    -ms-transition: color 0.5s;
+    -o-transition: color 0.5s;
+    transition: color 0.5s;
+}
+
+a:hover{
+    color:#FF5100;
+    text-decoration: none;
+}
+
+/* GENERAL COMPONENTS */
+.btn-sell{
+    background: #FF5100;
+    height: 52px;
+    line-height:36px;
+    color:#fff;
+    font-weight:700;
+}
 
 /* HEADER */
 #top-bar {
@@ -29,6 +60,15 @@
 #main-menu {
     list-style-type: none;
     text-align: right;
+}
+
+#main-menu li{
+    display: inline-block;
+}
+
+
+.search-box-container{
+    padding:15px 0 0 0;
 }
 
 #categories-menu {
@@ -47,6 +87,12 @@
 
 #categories-menu li a {
     color: #666;
+}
+
+.item-wrapper p{
+    text-align: center;
+    font-size: 17px;
+    font-weight: 700;
 }
 
 .box {
@@ -86,10 +132,183 @@ label.error{
     border-color: #ebccd1;
 }
 
+.product-actions{
+    padding:20px 0 0 0;
+}
+
+.item-category{
+    padding:20px 0 0 0;
+}
+
+.item-category h4{
+    font-size: 17px;
+}
+
+/*MY ITEMS*/
+
+.profile-container{
+    text-align: center;
+}
+
+.profile-container img{
+    width:100px;
+    height: 100px;
+}
+.profile-name{
+    margin:20px 0 0 0;
+    font-weight: 700;
+}
+
+.item h3{
+    margin:0;
+    padding: 0;
+    font-size:20px;
+}
+
+.item p{
+    padding:10px 0;
+}
+
+.item-actions a{
+
+}
+
+.item-author img{
+    width: 30px;
+    height: 30px;
+}
+
+.item-price{
+    float: right;
+    font-weight: bold;
+    font-size: 22px;
+     color:#FF5100;
+}
+
+.action-edit, .action-edit:hover{
+    color:#666;
+}
+
+.action-delete, .action-delete:hover{
+    color:#d9534f;
+}
+
+footer h2{
+    color:#FF5100;
+}
+
 .copyright{
     padding:20px 0;
 }
 
 #main-container{
     padding:0 0 30px 0;
+}
+
+/*IMAGE HOVER*/
+figure.snip0016 {
+  font-family: 'Raleway', Arial, sans-serif;
+  color: #fff;
+  position: relative;
+  float: left;
+  overflow: hidden;
+  margin: 10px 1%;
+  min-width: 220px;
+  max-width: 310px;
+  max-height: 220px;
+  width: 100%;
+  background: #000000;
+  text-align: left;
+}
+figure.snip0016 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+figure.snip0016 img {
+  max-width: 100%;
+  opacity: 1;
+  width: 100%;
+  -webkit-transition: opacity 0.35s;
+  transition: opacity 0.35s;
+}
+figure.snip0016 figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 30px 3em;
+  width: 100%;
+  height: 100%;
+}
+figure.snip0016 figcaption::before {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  bottom: 30px;
+  left: 100%;
+  border-left: 4px solid rgba(255, 255, 255, 0.8);
+  content: '';
+  opacity: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  -webkit-transition-delay: 0.6s;
+  transition-delay: 0.6s;
+}
+figure.snip0016 h2,
+figure.snip0016 p {
+  margin: 0 0 5px;
+  opacity: 0;
+  -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+  transition: opacity 0.35s,-webkit-transform 0.35s,-moz-transform 0.35s,-o-transform 0.35s,transform 0.35s;
+}
+figure.snip0016 h2 {
+  word-spacing: -0.15em;
+  font-weight: 300;
+  text-transform: uppercase;
+  -webkit-transform: translate3d(30%, 0%, 0);
+  transform: translate3d(30%, 0%, 0);
+  -webkit-transition-delay: 0.3s;
+  transition-delay: 0.3s;
+}
+figure.snip0016 h2 span {
+  font-weight: 800;
+}
+figure.snip0016 p {
+  font-weight: 200;
+  -webkit-transform: translate3d(0%, 30%, 0);
+  transform: translate3d(0%, 30%, 0);
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
+}
+figure.snip0016 a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  color: #ffffff;
+}
+figure.snip0016:hover img {
+  opacity: 0.3;
+}
+figure.snip0016:hover figcaption h2 {
+  opacity: 1;
+  -webkit-transform: translate3d(0%, 0%, 0);
+  transform: translate3d(0%, 0%, 0);
+  -webkit-transition-delay: 0.4s;
+  transition-delay: 0.4s;
+}
+figure.snip0016:hover figcaption p {
+  opacity: 0.9;
+  -webkit-transform: translate3d(0%, 0%, 0);
+  transform: translate3d(0%, 0%, 0);
+  -webkit-transition-delay: 0.6s;
+  transition-delay: 0.6s;
+}
+figure.snip0016:hover figcaption::before {
+  background: rgba(255, 255, 255, 0);
+  left: 30px;
+  opacity: 1;
+  -webkit-transition-delay: 0s;
+  transition-delay: 0s;
 }

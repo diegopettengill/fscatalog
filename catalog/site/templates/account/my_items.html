@@ -1,0 +1,80 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+<div class="container page">
+
+
+    <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 box">
+
+            <div class="profile-container">
+
+                <img src="{{ current_user.avatar }}"
+                     class="user-avatar img-circle" alt="">
+
+                <div class="profile-name">
+                    {{ current_user.name }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-9">
+
+            <div class="my-items-container">
+
+                {% for product in products: %}
+                <div class="item box">
+
+                    <div class="row">
+
+                        <div class="col-xs-3">
+                            <img
+                                    src="{{ url_for('static', filename='uploads/'+product.picture) }}" class="img-responsive img-thumbnail" alt="">
+                        </div>
+
+                        <div class="col-xs-9">
+                             <div class="pull-right item-price">
+                                ${{ product.price }}
+                            </div>
+
+                            <h3>{{ product.title }}</h3>
+
+                            <p>
+                                {{ product.description }}
+                            </p>
+
+                            <div class="item-actions">
+                                <a
+                                        href="{{ url_for('site.product_edit', product_id=product.id)}}" class="action-edit">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                    Edit
+                                </a>
+
+                                <a href="{{ url_for('site.product_delete',
+                                product_id=product.id)}}" class="action-delete">
+                                    <i class="glyphicon glyphicon-trash"></i>
+                                    Remove
+                                </a>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

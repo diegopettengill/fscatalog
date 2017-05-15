@@ -37,6 +37,13 @@ class Category(Base):
     name = Column(String(100), nullable=False)
     slug = Column(String(100), nullable=False)
 
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'slug': self.slug
+        }
 
 """Product model"""
 
@@ -57,3 +64,19 @@ class Product(Base):
     created_at = Column(DateTime, default=get_current_time)
     updated_at = Column(DateTime, default=get_current_time,
                         onupdate=get_current_time)
+
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'slug': self.slug,
+            'description': self.description,
+            'category': self.category_id,
+            'user': self.user_id,
+            'picture': self.picture,
+            'price': self.price,
+            'created_at': self.created_at,
+            'updated_at': self.updated_at
+        }
+

@@ -18,9 +18,14 @@
 
             <hr>
             <div class="item-author">
-                <img src="http://placehold.it/30x30" class="img-circle"
+                <img src="https://placehold.it/30x30" class="img-circle"
                      alt="">
                 {{ product.user.name }}
+            </div>
+
+            <div class="item-category">
+                <strong>Category:</strong> {{ product.category.name }}
+
             </div>
         </div>
 
@@ -28,17 +33,27 @@
 
             <img
                     src="{{ url_for('static', filename='uploads/'+product.picture) }}"
-                 class="img-responsive"
-                 alt="">
+                    class="img-responsive"
+                    alt="">
 
             <div class="product-actions">
 
                 {% if product.user.id == current_user.id %}
-                    <a
-                            href="{{ url_for('site.product_edit', product_id=product.id) }}">
-                        Edit</a>
-                    <a
-                            href="{{ url_for('site.product_delete', product_id=product.id) }}">Delete</a>
+                <p>
+                    It's your item!
+                </p>
+
+                <a
+                        href="{{ url_for('site.product_edit', product_id=product.id)}}" class="action-edit">
+                    <i class="glyphicon glyphicon-edit"></i>
+                    Edit
+                </a>
+
+                <a href="{{ url_for('site.product_delete',
+                                product_id=product.id)}}" class="action-delete">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    Remove
+                </a>
                 {% endif %}
 
             </div>
@@ -47,13 +62,40 @@
 
         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 box">
             <h3>
-               ${{ product.price }}
+                ${{ product.price }}
             </h3>
 
             <hr>
-            <button class="btn btn-primary btn-block">
+
+            <h4>
+                Send a message
+            </h4>
+
+            <form action="">
+
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name"
+                           placeholder="Your name">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="email"
+                           placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="phone"
+                           placeholder="Phone">
+                </div>
+
+                <div class="form-group">
+                     <button class="btn btn-primary btn-block">
                 i want it!
             </button>
+                </div>
+
+            </form>
+
+
+
         </div>
 
     </div>

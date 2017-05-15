@@ -29,14 +29,9 @@ def inject():
     return dict(categories=categories)
 
 
-@site.route('/uploads/<filename>')
-def uploads(filename):
-    return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
-
-
 @site.route('/')
 def home():
-    # fetch the last 12 products from the database
+    # fetch the last 16 products from the database
     products = Product.query.limit(16)
 
     return render_template(
@@ -45,10 +40,37 @@ def home():
     )
 
 
-@site.route('/category/<slug>')
-def category(slug):
+@site.route('/categories')
+def categories():
     return render_template(
         'category/index.html'
+    )
+
+
+@site.route('/category/<slug>')
+def category(slug):
+    category_obj = Category.query.filter_by(slug=slug).first()
+
+    products = Product.query.filter_by(category=category_obj).all()
+
+    return render_template(
+        'category/search.html',
+        products=products, category=category_obj
+    )
+
+
+@site.route('/search')
+def search():
+
+    q = request.args.get('q', '')
+
+    products = Product.query.filter(Product.title.like(
+        '%'+q+'%')).from_self().all()
+
+    return render_template(
+        'search/search.html',
+        products=products,
+        term=q
     )
 
 
@@ -135,7 +157,9 @@ def product_edit(product_id):
 
     product = Product.query.filter_by(id=product_id).first()
 
-    print product
+    # making sure that the current user owns the item
+    if not current_user.get_id == product.user.id:
+        return redirect("/")
 
     form = ProductForm(obj=product)
 
@@ -201,12 +225,24 @@ def product_edit(product_id):
 def product_delete(product_id):
     product = Product.query.filter_by(id=product_id).first()
 
+    # making sure that the current user owns the item
+    if not current_user.get_id == product.user.id:
+        return redirect("/")
+
     if product is not None:
         db_session.delete(product)
         db_session.commit()
         return redirect("/")
     else:
         return redirect("/")
+
+
+@site.route('/account/items', methods=["GET", "POST"])
+@login_required
+def my_items():
+    products = Product.query.filter_by(user_id=current_user.get_id()).all()
+
+    return render_template('account/my_items.html', products=products)
 
 
 @site.route('/login')
